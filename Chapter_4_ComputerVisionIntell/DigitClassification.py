@@ -4,60 +4,58 @@ Created on 04-Oct-2018
 @author: aii32199
 '''
 
-#Import necessary packages for building our CNN
+#Import the necessary packages for building our CNN
 from keras.models import Sequential
 
-#We will Need convolutional layer for feature maps and max pooling layers
-#Flatten layer will convert 2D image into 1D array for last layer computations
+#We will need convolutional layers for feature maps and max pooling layers
+#Flatten layer will convert 2D images into 1D arrays for last layer computations
 from keras.layers import Conv2D,MaxPool2D,\
 Activation,Flatten,Dense
 
 # Imports for array-handling and plotting
-from keras.callbacks import ModelCheckpoint
+from keras.callbacks
+import ModelCheckpoint
 from keras.datasets import mnist
-from keras.utils import np_utils 
+from keras.utils import np_utils
 import matplotlib.pyplot as plt
 import numpy as np
 
 #Here is our Network definition
 def LeNet(width, height, depth, classes, weightsPath=None):
-    
     #Initialize model
-    model = Sequential()
-    
+    model = Sequential()   
     #Convolution => Activation(ReLu)=> pooling(Max Pooling)
     model.add(Conv2D(20,(5,5),padding='same',
                      input_shape=(depth,height,width)))
     model.add(Activation("relu"))
-    model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
-    
+    model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))   
     #Convolution => Activation(ReLu) => pooling(Max Pooling)
     model.add(Conv2D(50,(5,5),padding="same"))
     model.add(Activation("relu"))
     model.add(MaxPool2D(pool_size=(2,2),strides=(2,2)))
-    
+
     #Fully connected Layer FC ==> ReLu
     model.add(Flatten())
     model.add(Dense(500))
     model.add(Activation("relu"))
     model.add(Dense(classes))
-    model.add(Activation("softmax"))
-    
+    model.add(Activation("softmax")) 
+
     # If a pre-trained model is supplied
     if weightsPath is not None:
-        model.load_weights(weightsPath)
-    
+        model.load_weights(weightsPath) 
+
     #return the constructed model
     return model
 
-# Keras imports for the data set and building our neural network
-#Let's Start by loading our data set
+#Keras imports for the dataset and building our neural network
+#Let's start by loading our dataset
 (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
 X_train = X_train.reshape(X_train.shape[0], 1, 28, 28).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], 1, 28, 28).astype('float32')
 
-# Print the shape before we reshape and normalize
+#Print the shape before we reshape and normalize
 print("X_train shape", X_train.shape)
 print("y_train shape", y_train.shape)
 print("X_test shape", X_test.shape)
@@ -82,13 +80,13 @@ Y_train = np_utils.to_categorical(y_train, n_classes)
 Y_test = np_utils.to_categorical(y_test, n_classes)
 print("Shape after one-hot encoding: ", Y_train.shape)
 
-# Now let's define path to store the model
+# Now let's define a path to store the model
 path2save = 'E:/PyDevWorkSpaceTest/Ensembles/Chapter_10/keras_mnist_lenet.h5'
 
 #Build the model structure  
 model = LeNet(28, 28, 1, 10)
 
-#We will only store the best model with highest validation accuracy 
+#We will only store the best model with the highest validation accuracy
 modelCheck = ModelCheckpoint(path2save, monitor='val_acc', 
                                        verbose=0, save_best_only=True, 
                                        save_weights_only=True, mode='auto')
@@ -97,7 +95,7 @@ modelCheck = ModelCheckpoint(path2save, monitor='val_acc',
 model.compile(optimizer="Adam", 
               loss = "categorical_crossentropy",metrics=["accuracy"])
  
-# Start training the model and saving metrics in history
+# Start training the model and save the metrics in the history
 history = model.fit(X_train, Y_train,
           batch_size=128, epochs=20,
           verbose=2,
