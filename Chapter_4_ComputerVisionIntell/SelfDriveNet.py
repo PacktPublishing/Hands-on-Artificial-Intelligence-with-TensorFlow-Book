@@ -7,10 +7,10 @@ Created on 29-Sep-2018
 # Import different Keras layers to create the network
 from keras.layers import Conv2D,MaxPool2D,Dense,Flatten,Dropout
 
-# We will build a Sequential model without feedbacks
+# We will build a Sequential model without feedback
 from keras.models import Sequential
 
-# here goes our network function
+# Here goes our network function
 def Network(height,width,depth,weights=None):
     
     # Height: Image Height
@@ -59,18 +59,18 @@ def Network(height,width,depth,weights=None):
     # Here we will convert 2D feature maps to 1D 
     model.add(Flatten())
     
-    # Add a Fully connected Layer with 50% drop-out
+    # Add a fully connected Layer with 50% drop-out
     model.add(Dense(1024,activation='relu'))
     model.add(Dropout(0.50))
     
-    # One more Fully connected layer here 
+    # One more fully connected layer goes here
     model.add(Dense(1024,activation='relu'))
     model.add(Dropout(0.50))
     
-    # Final layer with 3 outputs
+    # The final layer has 3 outputs
     model.add(Dense(classes,activation='softmax'))
 
-    # If learned weights provide load them into the network        
+    # If learned weights are provided, load them into the network        
     if weights is not None:
         model.load_weights(weights)
     

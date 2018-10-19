@@ -5,22 +5,22 @@ Created on 29-Sep-2018
 '''
 
 # We will use pandas to visualize class distribution
-# and apply some pre-processing on the data set
+# and apply some pre-processing on the dataset
 import pandas as pd
 
 # Matplotlib will help us to plot the class distribution
 import matplotlib.pyplot as plt
 
-# Numpy for calculating the mean of the data set
+# Numpy for calculating the mean of the dataset
 import numpy as np
 
-# Let's first define path of labels and 
+# Let's first define the path of the labels and 
 # Images along with the path to save processed data.
 path2data = 'Data/Images.npy'
 path2label = 'Data/response.npy'
 path2save = 'Data/'
            
-# Following function will create the categorical data set           
+# The following function will create the categorical dataset
 def create_labels(labels,num_classes):
     
     cat_labels = np.zeros((len(labels),
@@ -45,43 +45,37 @@ df = pd.DataFrame(labels,columns=['Action'])
 df.hist(bins=4)
 plt.show()
 
-# We need to remove at least 60% samples from class 0
-# to balance the data set following lines will give us
-# indices to be removed, it will be selected randomly  
+# We need to remove at least 60% of samples from class 0
+# to balance the dataset. The following lines will give us
+# the indices to be removed, which will be selected randomly  
 idx_up = df.query('Action == 0').sample(frac=.6).index
-
 # We need to remove all the instances for class 3
-# as there occurrence is very rare in the data set
+# as their occurrence is very rare in the dataset
 idx_down = df.query('Action == 3').sample(frac=1.0).index
-
-# We will convert indices into list
-# and merge indices to be removed from both the classes 
+# We will convert the indices into a list
+# and merge the indices to be removed from both the classes 
 list_index_up = idx_up._data.tolist()
 list_index_down = idx_down._data.tolist()
 list_index = list_index_up + list_index_down
-
-# Convert the labels to list from the DataFrame
+# Convert the labels to a list from the DataFrame
 labels = df['Action'].tolist()
 
-# Load the images which required to be removed 
+# Load the images which are required to be removed 
 images = np.load(path2data)
 images = images[0:-1] # Remove last ('esc') index
- 
-# We will create two new list for updated indices
+# We will create two new lists for the updated indices
 new_labels = []
 new_images = []
-
-# In following loop we will remove the images and labels 
+# In the following loop, we will remove the images and labels 
 for i in range(len(labels)):
     if i not in (list_index):
         new_labels.append(labels[i])
         new_images.append(images[i])
-
-# Convert list into numpy array  
+# Convert the list into a numpy array  
 images = np.array(new_images)
 labels = np.array(new_labels)
 
-# Let's visualize updated labels 
+# Let's visualize the updated labels 
 df = pd.DataFrame(labels)
 df.hist(bins=3)
 plt.show()
@@ -94,15 +88,15 @@ im_mean = [np.mean(np.mean(im_mean_all[:,:,2])),
 
 # Subtract the mean from the images to normalize the data
 image_data = images - im_mean
-# Reshape image data so in NX3X64X96 form
+# Reshape the image data so it is in NX3X64X96 form
 image_data = np.transpose(image_data,[0,3,1,2])
 
 print('Size of the image data set:', image_data.shape)
 
-# Here we will convert label into one hot encoded array
+# Here, we will convert labels into a one hot encoded array
 cat_labels = create_labels(labels,3)
 
-# Store pre processed data on the disk along with the mean
+# Store the pre processed data on the disk along with the mean
 np.save(path2save+'data.npy',np.array(image_data))
 np.save(path2save+'labels.npy',np.array(cat_labels))
 np.save(path2save+'mean.npy',np.array(im_mean))

@@ -4,10 +4,10 @@ Created on 29-Sep-2018
 @author: DX
 '''
 
-# Import pyautogui to grab the screen shot
+# Import pyautogui to grab the screenshot
 import pyautogui
 
-# Import time to control key press
+# Import time to control the key press
 import time 
 
 # Open Cv will help us in image processing
@@ -63,14 +63,14 @@ def drive():
     # Now we will run a continuous loop to drive the car
     while(1):
         
-        # Grab the screen shot
+        # Grab the screenshot
         pic = pyautogui.screenshot()
         
-        # Convert it into an array and convert color space    
+        # Convert it into an array and convert the color space    
         im = np.array(pic)
         im = cv2.cvtColor(im,cv2.COLOR_BGR2RGB)
         
-        # Crop the image to get game screen
+        # Crop the image to get the game screen
         crop = CropImages.crop(im)        
         
         # Subtract the mean from the image
@@ -84,7 +84,7 @@ def drive():
         # Get the class using max probability index 
         prediction = np.argmax(probs,axis=1)
         
-        # Take the action 
+        # Take action 
         if prediction==0:up()
         if prediction==1:left()
         if prediction==2:right()

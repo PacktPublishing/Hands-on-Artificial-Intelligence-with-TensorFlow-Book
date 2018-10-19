@@ -4,7 +4,7 @@ Created on 25-Sep-2018
 @author: DX
 '''
 
-# We will use pyautogui to grab the screen shot
+# We will use pyautogui to grab the screenshot
 import pyautogui 
 
 # OpenCv will be used to preprocess the image and write it on the disk
@@ -17,11 +17,11 @@ from pynput import keyboard
 import numpy as np
 
 # Let's create some global variables which we will use during 
-# the image captureing
+# The image capturing
 
 # I -- as a counter
 # RESPONSE -- will be the key binding
-# IMAGES -- will store the screen shots in a list  
+# IMAGES -- will store the screenshots in a list  
 global i,response,images 
 
 # Initialize the global variables
@@ -29,7 +29,7 @@ i = 0
 images = []
 response = []
 
-# Here we define the bounding box coordinates to crop the screen shot  
+# Here we define the bounding box coordinates to crop the screenshot  
 cords = [520,570]
 h,w = 490,740
 
@@ -41,7 +41,7 @@ def crop(im):
     cropped = cv2.resize(cropped,(2*96,2*64))
     return cropped
 
-# A look up will convert key response into numerical classes
+# A look up will convert the key response into numerical classes
 def key_lookup(key):
     
     if key==keyboard.Key.up:key_code = 0    
@@ -53,8 +53,8 @@ def key_lookup(key):
         
     return key_code
 
-# Now whenever a key will be pressed by user following 
-# program will execute    
+# Now whenever a key is pressed by the user, the following 
+# program will execute
 def on_press(key): 
     
     # Initialize the global variables
@@ -69,7 +69,7 @@ def on_press(key):
         # Increase the counter
         i = i+1   
         
-        # Take the screen shot of the game window 
+        # Take a screenshot of the game window 
         pic = pyautogui.screenshot()
         
         # convert it into a numpy array
@@ -82,7 +82,7 @@ def on_press(key):
         # Crop the meaningful area from the image
         im = crop(im)
         
-        # Append the image and associated key for that image into
+        # Append the image and the associated key for that image into
         # different lists
         images.append(im)
         response.append(key_code)
@@ -91,20 +91,19 @@ def on_press(key):
         cv2.imwrite('TrainingScreens/'+str(i)+'.png',im)    
           
 
-# When user will end the process following function will execute            
+# When the user ends the process, the following function will be executed         
 def on_release(key):    
     
-    # When user will press 'esc' key data collection will be ended
-    # and list of Images and key response will be stored to the disk 
+    # When the user presses the 'esc' key, data collection will end
+    # and a list of Images and key responses will be stored to the disk
     if key == keyboard.Key.esc:
         print('screen shot Stopped...')
         np.save('TrainingScreens/response.npy',response)
         np.save('TrainingScreens/Images.npy',images)
         return False
 
-# Here we will look for the key press    
+# Here we will look for key press    
 with keyboard.Listener(
         on_press=on_press,
         on_release=on_release) as listener:    
-    listener.join()    
-
+    listener.join() 
