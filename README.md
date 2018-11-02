@@ -48,10 +48,10 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 ### Related products
 * Artificial Intelligence with Python [[Packt]](https://www.packtpub.com/big-data-and-business-intelligence/artificial-intelligence-python?utm_source=github&utm_medium=repository&utm_campaign=9781786464392 ) [[Amazon]](https://www.amazon.com/dp/178646439X)
 
-*  [[Packt]](https://www.packtpub.com/big-data-and-business-intelligence/artificial-intelligence-example?utm_source=github&utm_medium=repository&utm_campaign=) [[Amazon]](https://www.amazon.com/dp/1788990544)
+* Artificial Intelligence By Example [[Packt]](https://www.packtpub.com/big-data-and-business-intelligence/artificial-intelligence-example?utm_source=github&utm_medium=repository&utm_campaign=) [[Amazon]](https://www.amazon.com/dp/1788990544)
 
 
-## Get to Know the Author
+## Get to Know the Authors
 **Amir Ziai**
 Amir Ziai is a senior data scientist at Netflix, where he works on streaming security involving petabyte-scale machine learning platforms and applications. He has worked as a data scientist in AdTech, HealthTech, and FinTech companies. He holds a master's degree in data science from UC Berkeley.
 
